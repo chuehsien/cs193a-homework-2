@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Homework2</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="dialog1_choices">
+        <item>Delete</item>
+        <item>Mark Complete</item>
+        <item>Back</item>
+    </string-array>
+    <string-array name="dialog2_choices">
+        <item>Delete</item>
+        <item>Mark Incomplete</item>
+        <item>Back</item>
+    </string-array>
+
+</resources>
