@@ -63,8 +63,7 @@ public class Tab2 extends Fragment {
         clrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tab2List.clear();
-                notifyUpdate();
+                clrItemList();
             }
         });
 
@@ -80,6 +79,10 @@ public class Tab2 extends Fragment {
 
 
         return v;
+    }
+    public void clrItemList(){
+        Tab2List.clear();
+        notifyUpdate();
     }
     public ArrayList<String> getItemList(){
         return Tab2List;

@@ -55,11 +55,20 @@ public class MainActivity extends ActionBarActivity implements Tab1.OnTab1Activi
 
         String str1 = settings.getString("settings1","");
         String[] strArr1 = str1.split("`");
-        tab1.setItemList(strArr1);
-
+        if (strArr1.length==1 && strArr1[0].equals("")){
+            tab1.clrItemList();
+        }
+        else {
+            tab1.setItemList(strArr1);
+        }
         String str2 = settings.getString("settings2", "");
         String[] strArr2 = str2.split("`");
-        tab2.setItemList(strArr2);
+        if (strArr2.length==1 && strArr2[0].equals("")){
+            tab2.clrItemList();
+        }
+        else {
+            tab2.setItemList(strArr1);
+        }
 
 
         Log.i("lifecycle", String.format("Retrieved: %s - %s", str1, str2));
