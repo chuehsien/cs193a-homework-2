@@ -16,15 +16,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-/**
- * Created by hp1 on 21-01-2015.
- */
 public class Tab1 extends Fragment{
     OnTab1Activity mCallback;
     public interface OnTab1Activity {
         public void tab1Activity(String str);
-    };
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -39,13 +37,29 @@ public class Tab1 extends Fragment{
                     + " must implement OnTab1Activity");
         }
     }
-    private View v;
 
     private ArrayList<String> Tab1List = new ArrayList<String>();
-    private ArrayAdapter<String> Tab1Adapter;
 
+    private ArrayAdapter<String> Tab1Adapter;
     private Button addButton;
+
+    private View v;
     private EditText editBox;
+
+    public ArrayList<String> getItemList(){
+        return Tab1List;
+    }
+
+    public void setItemList(String[] list){
+        Tab1List.clear();
+        Tab1List.addAll(Arrays.asList(list));
+        notifyUpdate();
+    }
+    public void clrItemList(){
+        Tab1List.clear();
+        notifyUpdate();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,9 +71,10 @@ public class Tab1 extends Fragment{
                 R.id.Tab1_text,                // ID of TextView item within the list layout
                 Tab1List
         );
+
         ListView Tab1LV = (ListView)v.findViewById(R.id.Tab1_listView);
         Tab1LV.setAdapter(Tab1Adapter);
-
+        Tab1LV.setEnabled(true);
         addButton = (Button)v.findViewById(R.id.addButton);
         editBox = (EditText)v.findViewById(R.id.editBox);
 
@@ -72,6 +87,16 @@ public class Tab1 extends Fragment{
                 notifyUpdate();
             }
         });
+        /*
+        addButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                clrItemList();
+                return false;
+            }
+        });
+
+        */
 
         Tab1LV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -81,6 +106,9 @@ public class Tab1 extends Fragment{
                 return false;
             }
         });
+
+
+
         return v;
     }
 
@@ -113,6 +141,30 @@ public class Tab1 extends Fragment{
         }
     }
 
+    private void confirmDelPopup(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.confirmdel_layout);
+        dialog.show();
+        Button yesB = (Button)dialog.findViewById(R.id.yesButton);
+        Button noB = (Button)dialog.findViewById(R.id.noButton);
+
+        yesB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clrItemList();
+                dialog.hide();
+            }
+        });
+
+        noB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+
+
+    }
     private void showPopup(final int pos){
 
         final Dialog dialog = new Dialog(getActivity());
@@ -133,6 +185,11 @@ public class Tab1 extends Fragment{
                     notifyUpdate();
                 }
                 else if (position == 2){
+                    //clear all items
+                    dialog.hide();
+                    confirmDelPopup();
+                }
+                else if (position == 3){
                                     // back
                 }
                 dialog.hide();

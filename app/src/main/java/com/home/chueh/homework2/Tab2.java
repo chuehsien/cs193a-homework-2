@@ -2,6 +2,7 @@ package com.home.chueh.homework2;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-/**
- * Created by hp1 on 21-01-2015.
- */
 public class Tab2 extends Fragment {
     OnTab2Activity mCallback;
     public interface OnTab2Activity {
@@ -44,7 +43,6 @@ public class Tab2 extends Fragment {
     private ArrayAdapter<String> Tab2Adapter;
 
     private Button clrButton;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +77,17 @@ public class Tab2 extends Fragment {
             }
         });
 
+
+
         return v;
+    }
+    public ArrayList<String> getItemList(){
+        return Tab2List;
+    }
+
+    public void setItemList(String[] list){
+        Tab2List.clear();
+        Tab2List.addAll(Arrays.asList(list));
     }
 
     public void notifyUpdate(){

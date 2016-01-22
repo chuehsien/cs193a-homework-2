@@ -1,8 +1,11 @@
 package com.home.chueh.homework2;
+import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,8 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+/*
 
+    The sliding tab design is from the follow online tutorial:
+    http://www.android4devs.com/2015/01/how-to-make-material-design-sliding-tabs.html
+
+ */
 public class MainActivity extends ActionBarActivity implements Tab1.OnTab1Activity, Tab2.OnTab2Activity{
 
     // Declaring Your View and Variables
@@ -21,10 +30,43 @@ public class MainActivity extends ActionBarActivity implements Tab1.OnTab1Activi
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     CharSequence Titles[]={"In-Progress","Completed"};
-
+    public static final String SETTINGS = "Hm2_Settings";
     int Numboftabs =2;
     private Tab1 tab1;
     private Tab2 tab2;
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("lifecycle","saving...");
+        SharedPreferences settings = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("settings1",TextUtils.join("`", tab1.getItemList()));
+        editor.putString("settings2",TextUtils.join("`", tab2.getItemList()));
+        Log.i("lifecycle", String.format("Saving: %s - %s", TextUtils.join("`", tab1.getItemList()), TextUtils.join("`", tab2.getItemList())));
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("lifecycle", "restoring...");
+        SharedPreferences settings = getSharedPreferences(SETTINGS,MODE_PRIVATE);
+
+        String str1 = settings.getString("settings1","");
+        String[] strArr1 = str1.split("`");
+        tab1.setItemList(strArr1);
+
+        String str2 = settings.getString("settings2", "");
+        String[] strArr2 = str2.split("`");
+        tab2.setItemList(strArr2);
+
+
+        Log.i("lifecycle", String.format("Retrieved: %s - %s", str1, str2));
+        Log.i("lifecycle", String.format("Restored: %s - %s", Arrays.toString(strArr1), Arrays.toString(strArr2)));
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

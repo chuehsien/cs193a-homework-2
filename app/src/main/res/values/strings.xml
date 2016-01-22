@@ -4,6 +4,7 @@
     <string-array name="dialog1_choices">
         <item>Delete</item>
         <item>Mark Complete</item>
+        <item>Clear all entries</item>
         <item>Back</item>
     </string-array>
     <string-array name="dialog2_choices">
@@ -11,5 +12,6 @@
         <item>Mark Incomplete</item>
         <item>Back</item>
     </string-array>
+
 
 </resources>
