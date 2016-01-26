@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements Tab1.OnTab1Activi
             tab2.clrItemList();
         }
         else {
-            tab2.setItemList(strArr1);
+            tab2.setItemList(strArr2);
         }
 
 
